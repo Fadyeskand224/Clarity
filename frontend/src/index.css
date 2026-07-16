@@ -1,0 +1,59 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand — teal is the recovery color the progress ring fills toward (FR-1.2) */
+  --color-brand-50: #effcfa;
+  --color-brand-100: #ccfbf1;
+  --color-brand-200: #90e8dc;
+  --color-brand-400: #2dd4bf;
+  --color-brand-500: #14b8a6;
+  --color-brand-600: #0f766e;
+  --color-brand-700: #0d5c54;
+
+  /* Chart chrome & ink, per dataviz skill palette.md */
+  --color-surface: #fcfcfb;
+  --color-page: #f9f9f7;
+  --color-ink: #0b0b0b;
+  --color-ink-secondary: #52514e;
+  --color-ink-muted: #898781;
+  --color-gridline: #e1e0d9;
+  --color-baseline: #c3c2b7;
+
+  /* Sequential blue ramp — used identically by the savings chart and the
+     adherence chart so they read as one system (BRD FR-6.3). */
+  --color-seq-100: #cde2fb;
+  --color-seq-200: #9ec5f4;
+  --color-seq-300: #6da7ec;
+  --color-seq-450: #2a78d6;
+  --color-seq-600: #184f95;
+
+  /* Status (fixed, never themed) */
+  --color-status-good: #0ca30c;
+  --color-status-warning: #fab219;
+  --color-status-critical: #d03b3b;
+
+  --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--color-page);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+/* Respect the iOS safe area when installed full-screen (NFR-1/NFR-3) */
+.safe-top {
+  padding-top: max(env(safe-area-inset-top), 0.75rem);
+}
+.safe-bottom {
+  padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
+}

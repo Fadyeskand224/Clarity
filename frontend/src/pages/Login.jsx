@@ -1,0 +1,80 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { api, apiErrorMessage } from '../api/client';
+import { useAuth } from '../context/AuthContext';
+import { Button, ErrorText } from '../components/ui';
+
+export default function Login() {
+  const { login } = useAuth();
+  const navigate = useNavigate();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  async function onSubmit(e) {
+    e.preventDefault();
+    setError('');
+    setLoading(true);
+    try {
+      const { data } = await api.post('/auth/login', { email, password });
+      login(data.token, data.user);
+      navigate(data.user.hasProfile ? '/' : '/onboarding', { replace: true });
+    } catch (err) {
+      setError(apiErrorMessage(err, 'Could not log in. Check your email and password.'));
+    } finally {
+      setLoading(false);
+    }
+  }
+
+  return (
+    <div className="safe-top flex min-h-screen flex-col justify-center bg-page px-6">
+      <div className="mx-auto w-full max-w-sm">
+        <Brand />
+        <h1 className="mt-8 text-2xl font-bold text-ink">Welcome back</h1>
+        <p className="mt-1 text-sm text-ink-secondary">Log in to pick up where you left off.</p>
+
+        <form onSubmit={onSubmit} className="mt-6 flex flex-col gap-3">
+          <input
+            type="email"
+            required
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+          />
+          <input
+            type="password"
+            required
+            placeholder="Password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+          />
+          <ErrorText>{error}</ErrorText>
+          <Button type="submit" disabled={loading} className="mt-2 w-full">
+            {loading ? 'Logging in…' : 'Log in'}
+          </Button>
+        </form>
+
+        <p className="mt-6 text-center text-sm text-ink-secondary">
+          New to Clarity?{' '}
+          <Link to="/signup" className="font-semibold text-brand-600">
+            Create an account
+          </Link>
+        </p>
+      </div>
+    </div>
+  );
+}
+
+export function Brand() {
+  return (
+    <div className="flex items-center gap-2">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-700 text-lg font-bold text-white">
+        C
+      </div>
+      <span className="text-lg font-bold text-ink">Clarity</span>
+    </div>
+  );
+}
