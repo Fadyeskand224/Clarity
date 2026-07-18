@@ -6,7 +6,7 @@ import { apiErrorMessage } from '../api/client';
 import { Button, ErrorText } from '../components/ui';
 import { Brand } from './Login';
 
-const REASONS = ['Health', 'Family', 'Money', 'Fitness', 'Pregnancy', 'A doctor recommended it'];
+export const REASONS = ['Health', 'Family', 'Money', 'Fitness', 'Pregnancy', 'A doctor recommended it'];
 
 export default function Onboarding() {
   const { setHasProfile } = useAuth();
@@ -43,8 +43,8 @@ export default function Onboarding() {
   }
 
   return (
-    <div className="safe-top min-h-screen bg-page px-6 pb-12">
-      <div className="mx-auto max-w-sm">
+    <div className="safe-top relative z-10 min-h-screen px-6 pb-12">
+      <div className="animate-fade-up mx-auto max-w-sm">
         <Brand />
         <h1 className="mt-8 text-2xl font-bold text-ink">Let's set up your quit</h1>
         <p className="mt-1 text-sm text-ink-secondary">
@@ -59,7 +59,7 @@ export default function Onboarding() {
               value={quitDate}
               onChange={(e) => setQuitDate(e.target.value)}
               max={new Date().toISOString().slice(0, 10)}
-              className="w-full rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+              className="input-glass w-full"
             />
           </Field>
 
@@ -70,10 +70,10 @@ export default function Onboarding() {
                   type="button"
                   key={reason}
                   onClick={() => toggleReason(reason)}
-                  className={`rounded-full border px-3 py-1.5 text-xs font-medium ${
+                  className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
                     reasons.includes(reason)
-                      ? 'border-brand-600 bg-brand-50 text-brand-700'
-                      : 'border-black/10 bg-surface text-ink-secondary'
+                      ? 'border-brand-400/50 bg-brand-400/15 text-brand-300 shadow-[0_0_12px_-4px_rgba(45,212,191,0.6)]'
+                      : 'border-white/10 bg-white/[0.03] text-ink-secondary hover:border-white/20'
                   }`}
                 >
                   {reason}
@@ -89,7 +89,7 @@ export default function Onboarding() {
               required
               value={cigarettesPerDay}
               onChange={(e) => setCigarettesPerDay(e.target.value)}
-              className="w-full rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+              className="input-glass w-full"
             />
           </Field>
 
@@ -101,7 +101,7 @@ export default function Onboarding() {
                 required
                 value={cigarettesPerPack}
                 onChange={(e) => setCigarettesPerPack(e.target.value)}
-                className="w-full rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+                className="input-glass w-full"
               />
             </Field>
             <Field label="Cost per pack ($)">
@@ -112,7 +112,7 @@ export default function Onboarding() {
                 required
                 value={costPerPack}
                 onChange={(e) => setCostPerPack(e.target.value)}
-                className="w-full rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+                className="input-glass w-full"
               />
             </Field>
           </div>

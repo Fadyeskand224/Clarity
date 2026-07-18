@@ -19,7 +19,7 @@ export default function Medications() {
   const active = regimens?.filter((r) => r.active) ?? [];
 
   return (
-    <div className="safe-top px-5">
+    <div className="safe-top animate-fade-up px-5">
       <PageHeader title="Medications" subtitle="Track your pharmacotherapy regimen and daily doses." />
 
       {active.length === 0 && !isLoading && (
@@ -52,10 +52,11 @@ export default function Medications() {
       )}
 
       {/* FR-6.5: evidence callout */}
-      <Card className="mt-4 mb-8 bg-brand-50 border-none">
-        <p className="text-sm text-brand-800">
-          <strong>Why medication helps:</strong> combining medication with behavioral support roughly doubles quit
-          success compared with behavioral support alone (USPSTF cessation guidelines).
+      <Card className="mt-4 mb-8 border-brand-400/20 bg-brand-400/[0.06]">
+        <p className="text-sm text-ink-secondary">
+          <strong className="text-brand-200">Why medication helps:</strong> combining medication with behavioral
+          support roughly doubles quit success compared with behavioral support alone (USPSTF cessation
+          guidelines).
         </p>
       </Card>
     </div>
@@ -90,16 +91,18 @@ function RegimenCard({ regimen }) {
         <button
           onClick={markTaken}
           disabled={logAdherence.isPending}
-          className={`rounded-full px-4 py-2 text-xs font-semibold ${
-            takenToday ? 'bg-brand-600 text-white' : 'bg-brand-50 text-brand-700'
+          className={`rounded-full px-4 py-2 text-xs font-semibold transition-all duration-200 ${
+            takenToday
+              ? 'bg-gradient-to-r from-brand-400 to-cyan-glow text-[#01201d] shadow-[0_0_16px_-4px_rgba(45,212,191,0.7)]'
+              : 'glass-panel text-brand-300 hover:border-brand-400/40'
           }`}
         >
-          {takenToday ? '✓ Taken today' : 'Mark today\'s dose taken'}
+          {takenToday ? '✓ Taken today' : "Mark today's dose taken"}
         </button>
 
         <label className="flex items-center gap-2 text-xs text-ink-secondary">
           Reminders
-          <input type="checkbox" checked={regimen.reminders_enabled} onChange={toggleReminders} className="h-4 w-4 accent-brand-600" />
+          <input type="checkbox" checked={regimen.reminders_enabled} onChange={toggleReminders} className="h-4 w-4 accent-brand-400" />
         </label>
       </div>
     </Card>
@@ -125,10 +128,10 @@ function NewRegimenForm({ onDone }) {
         <select
           value={medicationType}
           onChange={(e) => setMedicationType(e.target.value)}
-          className="rounded-xl border border-black/10 bg-page px-4 py-3 text-sm outline-none focus:border-brand-500"
+          className="input-glass"
         >
           {MED_TYPES.map((t) => (
-            <option key={t} value={t}>
+            <option key={t} value={t} className="bg-[#10151f] text-ink">
               {t}
             </option>
           ))}
@@ -137,13 +140,13 @@ function NewRegimenForm({ onDone }) {
           placeholder="Name (e.g. Nicotine Patch 21mg)"
           value={medicationName}
           onChange={(e) => setMedicationName(e.target.value)}
-          className="rounded-xl border border-black/10 bg-page px-4 py-3 text-sm outline-none focus:border-brand-500"
+          className="input-glass"
         />
         <input
           placeholder="Dose schedule (e.g. 1 patch daily, PRN gum as needed)"
           value={doseSchedule}
           onChange={(e) => setDoseSchedule(e.target.value)}
-          className="rounded-xl border border-black/10 bg-page px-4 py-3 text-sm outline-none focus:border-brand-500"
+          className="input-glass"
         />
         <div className="flex gap-2">
           <Button type="button" variant="ghost" onClick={onDone} className="flex-1">

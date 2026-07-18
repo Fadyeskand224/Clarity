@@ -1,38 +1,49 @@
 @import "tailwindcss";
 
 @theme {
-  /* Brand — teal is the recovery color the progress ring fills toward (FR-1.2) */
+  /* Brand — teal/cyan glow accents against a deep dark surface */
   --color-brand-50: #effcfa;
   --color-brand-100: #ccfbf1;
   --color-brand-200: #90e8dc;
+  --color-brand-300: #5eead4;
   --color-brand-400: #2dd4bf;
   --color-brand-500: #14b8a6;
-  --color-brand-600: #0f766e;
-  --color-brand-700: #0d5c54;
+  --color-brand-600: #0d9488;
+  --color-brand-700: #0f766e;
 
-  /* Chart chrome & ink, per dataviz skill palette.md */
-  --color-surface: #fcfcfb;
-  --color-page: #f9f9f7;
-  --color-ink: #0b0b0b;
-  --color-ink-secondary: #52514e;
-  --color-ink-muted: #898781;
-  --color-gridline: #e1e0d9;
-  --color-baseline: #c3c2b7;
+  --color-violet-glow: #7c5cff;
+  --color-cyan-glow: #22d3ee;
 
-  /* Sequential blue ramp — used identically by the savings chart and the
-     adherence chart so they read as one system (BRD FR-6.3). */
-  --color-seq-100: #cde2fb;
-  --color-seq-200: #9ec5f4;
-  --color-seq-300: #6da7ec;
-  --color-seq-450: #2a78d6;
-  --color-seq-600: #184f95;
+  /* Dark chart chrome & ink, per dataviz skill palette.md dark column */
+  --color-surface: #10151f;
+  --color-page: #06080d;
+  --color-ink: #f2f5f9;
+  --color-ink-secondary: #a3aec2;
+  --color-ink-muted: #6d7791;
+  --color-gridline: #1f2633;
+  --color-baseline: #313a4a;
+
+  /* Sequential blue ramp (dark-surface step), used identically by the
+     savings chart and the adherence chart so they read as one system. */
+  --color-seq-100: #16233a;
+  --color-seq-200: #1c355c;
+  --color-seq-300: #235088;
+  --color-seq-450: #3987e5;
+  --color-seq-600: #7db4f2;
 
   /* Status (fixed, never themed) */
   --color-status-good: #0ca30c;
   --color-status-warning: #fab219;
-  --color-status-critical: #d03b3b;
+  --color-status-critical: #e66767;
 
   --font-sans: "Segoe UI", system-ui, -apple-system, sans-serif;
+
+  --animate-fade-up: fade-up 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  --animate-drift-a: drift-a 22s ease-in-out infinite;
+  --animate-drift-b: drift-b 26s ease-in-out infinite;
+  --animate-drift-c: drift-c 30s ease-in-out infinite;
+  --animate-glow-pulse: glow-pulse 2.8s ease-in-out infinite;
+  --animate-shimmer: shimmer 2.4s linear infinite;
 }
 
 html,
@@ -48,6 +59,10 @@ body {
   font-family: var(--font-sans);
   -webkit-tap-highlight-color: transparent;
   overscroll-behavior-y: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.025) 1px, transparent 1px);
+  background-size: 36px 36px;
 }
 
 /* Respect the iOS safe area when installed full-screen (NFR-1/NFR-3) */
@@ -56,4 +71,102 @@ body {
 }
 .safe-bottom {
   padding-bottom: max(env(safe-area-inset-bottom), 0.75rem);
+}
+
+/* ---- Aurora background: fixed, behind everything, subtly alive ---- */
+.aurora-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+.aurora-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(80px);
+  opacity: 0.32;
+  will-change: transform;
+}
+
+@keyframes drift-a {
+  0%, 100% { transform: translate(-6%, -8%) scale(1); }
+  50% { transform: translate(8%, 6%) scale(1.15); }
+}
+@keyframes drift-b {
+  0%, 100% { transform: translate(10%, 4%) scale(1); }
+  50% { transform: translate(-8%, -10%) scale(1.1); }
+}
+@keyframes drift-c {
+  0%, 100% { transform: translate(0%, 10%) scale(1); }
+  50% { transform: translate(-10%, -4%) scale(1.08); }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 0.55; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.04); }
+}
+
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+/* Glass surfaces, registered via @utility. */
+@utility glass-panel {
+  background-color: rgba(255, 255, 255, 0.065);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), 0 8px 30px -12px rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+@utility glass-strong {
+  background-color: rgba(20, 26, 38, 0.85);
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+}
+
+/* Shared form field style — used across Login/Signup/Onboarding/Journal/etc. */
+@utility input-glass {
+  border-radius: 0.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(255, 255, 255, 0.045);
+  color: var(--color-ink);
+  padding: 0.75rem 1rem;
+  font-size: 0.875rem;
+  outline: none;
+  transition: all 0.2s ease;
+
+  &::placeholder {
+    color: var(--color-ink-muted);
+  }
+  &:focus {
+    border-color: rgba(45, 212, 191, 0.55);
+    background-color: rgba(255, 255, 255, 0.065);
+    box-shadow: 0 0 0 3px rgba(45, 212, 191, 0.14);
+  }
+}
+
+::selection {
+  background: rgba(45, 212, 191, 0.35);
+  color: #fff;
+}
+
+/* Respect reduced-motion preference: kill decorative animation, keep instant state changes */
+@media (prefers-reduced-motion: reduce) {
+  .aurora-blob,
+  .animate-glow-pulse,
+  .animate-fade-up,
+  .animate-shimmer {
+    animation: none !important;
+  }
+  * {
+    transition-duration: 0.01ms !important;
+  }
 }

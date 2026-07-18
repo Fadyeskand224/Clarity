@@ -1,19 +1,24 @@
 export function Card({ children, className = '' }) {
   return (
-    <div className={`rounded-2xl border border-black/10 bg-surface p-4 shadow-sm ${className}`}>{children}</div>
+    <div
+      className={`glass-panel rounded-2xl p-4 transition-all duration-300 hover:border-white/20 ${className}`}
+    >
+      {children}
+    </div>
   );
 }
 
 export function Button({ children, variant = 'primary', className = '', ...props }) {
   const variants = {
-    primary: 'bg-brand-600 text-white active:bg-brand-700',
-    secondary: 'bg-brand-50 text-brand-700 active:bg-brand-100',
-    ghost: 'bg-transparent text-ink-secondary active:bg-black/5',
-    danger: 'bg-red-50 text-red-600 active:bg-red-100',
+    primary:
+      'bg-gradient-to-r from-brand-400 to-cyan-glow text-[#01201d] shadow-[0_0_24px_-6px_rgba(45,212,191,0.7)] hover:shadow-[0_0_32px_-4px_rgba(45,212,191,0.85)] hover:brightness-110 active:scale-[0.97]',
+    secondary: 'glass-panel text-brand-300 hover:border-brand-400/40 hover:text-brand-200 active:scale-[0.97]',
+    ghost: 'bg-transparent text-ink-secondary hover:bg-white/5 active:scale-[0.97]',
+    danger: 'bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500/15 active:scale-[0.97]',
   };
   return (
     <button
-      className={`rounded-full px-5 py-3 text-sm font-semibold transition disabled:opacity-50 ${variants[variant]} ${className}`}
+      className={`rounded-full px-5 py-3 text-sm font-semibold transition-all duration-200 disabled:opacity-40 disabled:hover:shadow-none disabled:active:scale-100 ${variants[variant]} ${className}`}
       {...props}
     >
       {children}
@@ -23,8 +28,10 @@ export function Button({ children, variant = 'primary', className = '', ...props
 
 export function PageHeader({ title, subtitle }) {
   return (
-    <header className="safe-top px-5 pb-2">
-      <h1 className="text-2xl font-bold text-ink">{title}</h1>
+    <header className="safe-top animate-fade-up px-5 pb-2">
+      <h1 className="bg-gradient-to-r from-white to-white/70 bg-clip-text text-2xl font-bold text-transparent">
+        {title}
+      </h1>
       {subtitle && <p className="mt-0.5 text-sm text-ink-secondary">{subtitle}</p>}
     </header>
   );
@@ -32,7 +39,9 @@ export function PageHeader({ title, subtitle }) {
 
 export function ErrorText({ children }) {
   if (!children) return null;
-  return <p className="rounded-lg bg-red-50 px-3 py-2 text-sm text-red-600">{children}</p>;
+  return (
+    <p className="rounded-lg border border-red-500/20 bg-red-500/10 px-3 py-2 text-sm text-red-400">{children}</p>
+  );
 }
 
 export function EmptyState({ children }) {

@@ -28,8 +28,8 @@ export default function Login() {
   }
 
   return (
-    <div className="safe-top flex min-h-screen flex-col justify-center bg-page px-6">
-      <div className="mx-auto w-full max-w-sm">
+    <div className="safe-top relative z-10 flex min-h-screen flex-col justify-center px-6">
+      <div className="animate-fade-up mx-auto w-full max-w-sm">
         <Brand />
         <h1 className="mt-8 text-2xl font-bold text-ink">Welcome back</h1>
         <p className="mt-1 text-sm text-ink-secondary">Log in to pick up where you left off.</p>
@@ -41,7 +41,7 @@ export default function Login() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+            className="input-glass"
           />
           <input
             type="password"
@@ -49,7 +49,7 @@ export default function Login() {
             placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+            className="input-glass"
           />
           <ErrorText>{error}</ErrorText>
           <Button type="submit" disabled={loading} className="mt-2 w-full">
@@ -59,7 +59,7 @@ export default function Login() {
 
         <p className="mt-6 text-center text-sm text-ink-secondary">
           New to Clarity?{' '}
-          <Link to="/signup" className="font-semibold text-brand-600">
+          <Link to="/signup" className="font-semibold text-brand-300 hover:text-brand-200">
             Create an account
           </Link>
         </p>
@@ -71,7 +71,7 @@ export default function Login() {
 export function Brand() {
   return (
     <div className="flex items-center gap-2">
-      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-brand-700 text-lg font-bold text-white">
+      <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-brand-400 to-cyan-glow text-lg font-bold text-[#01201d] shadow-[0_0_20px_-4px_rgba(45,212,191,0.7)]">
         C
       </div>
       <span className="text-lg font-bold text-ink">Clarity</span>

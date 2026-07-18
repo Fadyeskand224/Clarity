@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { RequireAuth, RequireGuest } from './components/RequireAuth';
 import AppShell from './components/AppShell';
+import AuroraBackground from './components/AuroraBackground';
 
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -14,6 +15,7 @@ import Progress from './pages/Progress';
 import Journal from './pages/Journal';
 import Fagerstrom from './pages/Fagerstrom';
 import Medications from './pages/Medications';
+import Profile from './pages/Profile';
 
 const queryClient = new QueryClient({
   defaultOptions: { queries: { refetchOnWindowFocus: false, retry: 1 } },
@@ -24,6 +26,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <AuthProvider>
         <BrowserRouter>
+          <AuroraBackground />
           <Routes>
             <Route element={<RequireGuest />}>
               <Route path="/login" element={<Login />} />
@@ -74,6 +77,14 @@ export default function App() {
                 element={
                   <AppShell>
                     <Medications />
+                  </AppShell>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <AppShell>
+                    <Profile />
                   </AppShell>
                 }
               />

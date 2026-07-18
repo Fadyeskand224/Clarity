@@ -30,6 +30,13 @@ export function useSaveProfile() {
   });
 }
 
+export function useChangePassword() {
+  return useMutation({
+    mutationFn: async ({ currentPassword, newPassword }) =>
+      (await api.put('/auth/password', { currentPassword, newPassword })).data,
+  });
+}
+
 // ---- Smoking events (relapse log) ----
 export function useLogSmokingEvent() {
   const qc = useQueryClient();

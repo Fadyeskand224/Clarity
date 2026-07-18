@@ -10,7 +10,7 @@ const TABS = [
 
 export default function BottomNav() {
   return (
-    <nav className="safe-bottom fixed bottom-0 left-0 right-0 z-40 border-t border-black/10 bg-surface/95 backdrop-blur">
+    <nav className="safe-bottom glass-strong fixed bottom-0 left-0 right-0 z-40 border-t border-white/10">
       <div className="mx-auto flex max-w-md items-stretch justify-between px-2">
         {TABS.map(({ to, label, icon: Icon, end }) => (
           <NavLink
@@ -18,13 +18,24 @@ export default function BottomNav() {
             to={to}
             end={end}
             className={({ isActive }) =>
-              `flex flex-1 flex-col items-center gap-1 py-2 text-[11px] font-medium ${
-                isActive ? 'text-brand-600' : 'text-ink-muted'
+              `group relative flex flex-1 flex-col items-center gap-1 py-2 text-[11px] font-medium transition-colors duration-200 ${
+                isActive ? 'text-brand-300' : 'text-ink-muted hover:text-ink-secondary'
               }`
             }
           >
-            <Icon />
-            {label}
+            {({ isActive }) => (
+              <>
+                {isActive && (
+                  <span className="absolute -top-px h-0.5 w-8 rounded-full bg-gradient-to-r from-brand-400 to-cyan-glow shadow-[0_0_10px_1px_rgba(45,212,191,0.8)]" />
+                )}
+                <span
+                  className={`transition-all duration-200 ${isActive ? 'drop-shadow-[0_0_6px_rgba(45,212,191,0.7)]' : ''}`}
+                >
+                  <Icon />
+                </span>
+                {label}
+              </>
+            )}
           </NavLink>
         ))}
       </div>

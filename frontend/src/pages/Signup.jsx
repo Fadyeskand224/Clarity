@@ -29,8 +29,8 @@ export default function Signup() {
   }
 
   return (
-    <div className="safe-top flex min-h-screen flex-col justify-center bg-page px-6">
-      <div className="mx-auto w-full max-w-sm">
+    <div className="safe-top relative z-10 flex min-h-screen flex-col justify-center px-6">
+      <div className="animate-fade-up mx-auto w-full max-w-sm">
         <Brand />
         <h1 className="mt-8 text-2xl font-bold text-ink">Start your quit</h1>
         <p className="mt-1 text-sm text-ink-secondary">
@@ -44,7 +44,7 @@ export default function Signup() {
             placeholder="Email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+            className="input-glass"
           />
           <input
             type="password"
@@ -53,7 +53,7 @@ export default function Signup() {
             placeholder="Password (min. 8 characters)"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="rounded-xl border border-black/10 bg-surface px-4 py-3 text-sm outline-none focus:border-brand-500"
+            className="input-glass"
           />
           <ErrorText>{error}</ErrorText>
           <Button type="submit" disabled={loading} className="mt-2 w-full">
@@ -63,7 +63,7 @@ export default function Signup() {
 
         <p className="mt-6 text-center text-sm text-ink-secondary">
           Already have an account?{' '}
-          <Link to="/login" className="font-semibold text-brand-600">
+          <Link to="/login" className="font-semibold text-brand-300 hover:text-brand-200">
             Log in
           </Link>
         </p>

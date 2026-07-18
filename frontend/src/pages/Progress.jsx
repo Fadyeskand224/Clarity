@@ -28,7 +28,7 @@ export default function Progress() {
   const series = buildSavingsSeries(data.profile, data.quitStart, data.streakDays);
 
   return (
-    <div className="safe-top px-5">
+    <div className="safe-top animate-fade-up px-5">
       <PageHeader title="Progress" subtitle="Your recovery, visualized." />
 
       <Card className="mt-4">
@@ -60,8 +60,10 @@ export default function Progress() {
           {data.healthMilestones.map((m) => (
             <li key={m.label} className="flex items-start gap-3">
               <span
-                className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold ${
-                  m.achieved ? 'bg-brand-600 text-white' : 'bg-black/10 text-ink-muted'
+                className={`mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded-full text-[10px] font-bold transition-all duration-300 ${
+                  m.achieved
+                    ? 'bg-gradient-to-br from-brand-400 to-cyan-glow text-[#01201d] shadow-[0_0_10px_-1px_rgba(45,212,191,0.8)]'
+                    : 'bg-white/[0.06] text-ink-muted'
                 }`}
               >
                 {m.achieved ? '✓' : ''}
@@ -77,7 +79,7 @@ export default function Progress() {
 
       <p className="mb-8 px-1 text-center text-xs text-ink-muted">
         Need more support? Call the CDC Quitline at{' '}
-        <a href="tel:18007848669" className="font-semibold text-brand-600">
+        <a href="tel:18007848669" className="font-semibold text-brand-300 hover:text-brand-200">
           1-800-QUIT-NOW
         </a>
       </p>

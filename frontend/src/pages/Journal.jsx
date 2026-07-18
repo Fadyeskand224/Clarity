@@ -22,7 +22,7 @@ export default function Journal() {
   }
 
   return (
-    <div className="safe-top px-5">
+    <div className="safe-top animate-fade-up px-5">
       <PageHeader title="Journal" subtitle="Log triggers and mood to spot your patterns." />
 
       <Card className="mt-4">
@@ -31,7 +31,7 @@ export default function Journal() {
             placeholder="Trigger (e.g. after coffee, driving)"
             value={trigger}
             onChange={(e) => setTrigger(e.target.value)}
-            className="rounded-xl border border-black/10 bg-page px-4 py-3 text-sm outline-none focus:border-brand-500"
+            className="input-glass"
           />
           <div className="flex flex-wrap gap-2">
             {MOODS.map((m) => (
@@ -39,8 +39,10 @@ export default function Journal() {
                 type="button"
                 key={m}
                 onClick={() => setMood(mood === m ? '' : m)}
-                className={`rounded-full border px-3 py-1.5 text-xs font-medium ${
-                  mood === m ? 'border-brand-600 bg-brand-50 text-brand-700' : 'border-black/10 bg-page text-ink-secondary'
+                className={`rounded-full border px-3 py-1.5 text-xs font-medium transition-all duration-200 ${
+                  mood === m
+                    ? 'border-brand-400/50 bg-brand-400/15 text-brand-300 shadow-[0_0_12px_-4px_rgba(45,212,191,0.6)]'
+                    : 'border-white/10 bg-white/[0.03] text-ink-secondary hover:border-white/20'
                 }`}
               >
                 {m}
@@ -52,7 +54,7 @@ export default function Journal() {
             value={note}
             onChange={(e) => setNote(e.target.value)}
             rows={2}
-            className="rounded-xl border border-black/10 bg-page px-4 py-3 text-sm outline-none focus:border-brand-500"
+            className="input-glass resize-none"
           />
           <Button type="submit" disabled={createEntry.isPending} className="w-full">
             {createEntry.isPending ? 'Saving…' : 'Add entry'}
