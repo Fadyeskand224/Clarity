@@ -187,7 +187,6 @@ about the gap:
 - **No comorbidity-aware content.** Right now the content is the same regardless of
   whether someone has COPD or asthma; a separate content branch for that is a future
   phase.
-- **No monetization.** Not implemented, not decided.
 
 ## Project structure
 
